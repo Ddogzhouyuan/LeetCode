@@ -1,10 +1,20 @@
 package LeetCode_CN;
 
 public class lc63_UniquePathsII {
-    class Solution {
+    static class Solution {
         public int uniquePathsWithObstacles(int[][] obstacleGrid) {
             int n = obstacleGrid.length;
             int m = obstacleGrid[0].length;
+            if (n == 1 || m == 1) {
+                for (int i = 0; i < n; i++) {
+                    for (int j = 0; j < m; j++) {
+                        if (obstacleGrid[i][j] == 1) {
+                            return 0;
+                        }
+                    }
+                }
+                return 1;
+            }
             int[][] dp = new int[n][m];
             for (int i = 0; i < n; i++) {
                 if (obstacleGrid[i][0] == 1) {
@@ -29,7 +39,14 @@ public class lc63_UniquePathsII {
                     }
                 }
             }
-            return dp[n][m];
+            return dp[n - 1][m - 1];
         }
+    }
+
+    public static void main(String[] args) {
+        int[][] obstacleGrid = {{1, 0}, {0, 0}};
+        Solution tool = new Solution();
+        int result = tool.uniquePathsWithObstacles(obstacleGrid);
+        System.out.println(result);
     }
 }
