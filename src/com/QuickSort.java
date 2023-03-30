@@ -1,5 +1,7 @@
 package com;
 
+import java.util.Random;
+
 public class QuickSort {
     public void sort(int[] nums) {
         sort(nums, 0, nums.length - 1);
@@ -9,9 +11,32 @@ public class QuickSort {
         if (lo >= hi) {
             return;
         }
-        int p = partition(nums, lo, hi);
+        int p = partition2(nums, lo, hi);
         sort(nums, lo, p - 1);
         sort(nums, p + 1, hi);
+    }
+
+    private static final Random RANDOM = new Random();
+    private int partition2(int[] nums, int lo, int hi) {
+        int randomIndex = RANDOM.nextInt(hi - lo + 1) + lo;
+        swap(nums, lo, randomIndex);
+        int l = lo;
+        int r = hi;
+        int pivot = nums[lo];
+        while (l < r) {
+            while (l < r && nums[r] >= pivot) {
+                r--;
+            }
+            while (l < r && nums[l] <= pivot) {
+                l++;
+            }
+            if (l >= r) {
+                break;
+            }
+            swap(nums, l, r);
+        }
+        swap(nums, lo, l);
+        return l;
     }
 
     private int partition(int[] nums, int lo, int hi) {
