@@ -1,6 +1,7 @@
 package CS_basic_algorithm;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Stack;
 
 public class CS_8_sort_method {
@@ -135,6 +136,54 @@ public class CS_8_sort_method {
                 }
             }
         }
+    }
+
+    /**
+     * 快排
+     */
+    private static final Random RANDOM = new Random();
+
+    public int[] sortArray(int[] nums) {
+        int n = nums.length;
+        quickSort2(nums, 0, n - 1);
+        return nums;
+    }
+
+    private void quickSort2(int[] nums, int lo, int hi) {
+        if (lo >= hi) {
+            return;
+        }
+        int pivotIndex = partition2(nums, lo, hi);
+        quickSort2(nums, lo, pivotIndex - 1);
+        quickSort2(nums, pivotIndex + 1, hi);
+    }
+
+    private int partition2(int[] nums, int lo, int hi) {
+        int randomIndex = RANDOM.nextInt(hi - lo + 1) + lo;
+        swap(nums, lo, randomIndex);
+        int l = lo;
+        int r = hi;
+        int pivot = nums[lo];
+        while (l < r) {
+            while (l < r && nums[r] >= pivot) {
+                r--;
+            }
+            while (l < r && nums[l] <= pivot) {
+                l++;
+            }
+            if (l >= r) {
+                break;
+            }
+            swap(nums, l, r);
+        }
+        swap(nums, lo, l);
+        return l;
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 
     /**
